@@ -1,8 +1,16 @@
 const express = require("express");
 const cors = require("cors");
+const passport = require("passport");
 const app = express();
+require('./auth');
 
 app.use(cors());
+
+app.get('/oauth', passport.authenticate('google', {scope: ['email', 'profile']}))
+
+app.get('/rules', (req, res) => {
+    res.send('no rules - contact adithyaps929@gmail.com for rules');
+})
 
 app.get('/nutrition', async (req, res) => {
     try{
