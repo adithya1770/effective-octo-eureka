@@ -5,6 +5,8 @@ const app = express();
 require('./auth');
 
 app.use(cors());
+app.use(express.urlencoded({ extended: false}));
+app.use(express.json());
 
 app.get('/oauth', passport.authenticate('google', {scope: ['email', 'profile']}))
 
@@ -13,12 +15,20 @@ app.get('/rules', (req, res) => {
 })
 
 app.post('/compiler', async (req, res) => {
+    const payloadBody = req.body;
     try {
-        const response = await fetch("https://api.jdoodle.com/v1/execute");
-        res.status(200).json({ message: response});
+        const response = await fetch("https://api.jdoodle.com/v1/execute", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payloadBody),
+        });
+        const responseNew = await response.json();
+        res.status(200).json(responseNew);
     } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Something went wrong" });
+        console.error("Error during API call:", error);
+        res.status(500).json({ error: "Something went wrong with the JDoodle API" });
     }
 });
 
