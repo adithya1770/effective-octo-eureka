@@ -12,6 +12,10 @@ app.get('/rules', (req, res) => {
     res.send('no rules - contact adithyaps929@gmail.com for rules');
 })
 
+app.post('/compiler', async (req, res) => {
+    await fetch("https://api.jdoodle.com/v1//execute");
+})
+
 app.get('/nutrition', async (req, res) => {
     try{
         const reqQuery = req.query.query;
