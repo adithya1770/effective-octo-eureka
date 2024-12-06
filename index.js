@@ -13,8 +13,14 @@ app.get('/rules', (req, res) => {
 })
 
 app.post('/compiler', async (req, res) => {
-    await fetch("https://api.jdoodle.com/v1//execute");
-})
+    try {
+        const response = await fetch("https://api.jdoodle.com/v1/execute");
+        res.status(200).json({ message: response});
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+});
 
 app.get('/nutrition', async (req, res) => {
     try{
