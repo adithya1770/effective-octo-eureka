@@ -4,7 +4,7 @@ const passport = require("passport");
 const app = express();
 require('./auth');
 
-app.use(cors());
+app.use(cors({origin: '*'}));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
@@ -19,9 +19,6 @@ app.post('/compiler', async (req, res) => {
     try {
         const response = await fetch("https://api.jdoodle.com/v1/execute", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(payloadBody),
         });
         const responseNew = await response.json();
