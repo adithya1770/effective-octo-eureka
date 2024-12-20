@@ -8,7 +8,7 @@ const GOOGLE_CLIENT_SECRET = data.web.client_secret;
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:5173/dashboard",
+    callbackURL: "https://dashyweb.vercel.app/dashboard",
     passReqToCallback: true
   },
   function(request, accessToken, refreshToken, profile, done) {
